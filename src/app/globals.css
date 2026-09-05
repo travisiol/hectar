@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+/*
+ * HECTAR — one world, hundreds of independent economies.
+ *
+ * A phosphor read-out of a planet: near-black ground with a green cast,
+ * pale neutral line work, and saturated green reserved for one thing only —
+ * ground that has a market. The brighter it burns the more is trading on
+ * it, and the hectar that has pulled in the most owners flips to cyan.
+ * That reservation is the whole system: on a globe of 999 identical
+ * hexagons, colour has to mean activity or it means nothing, which is why
+ * the coastlines and the graticule stay colourless.
+ *
+ * The accent token is named --signal, not --green. It means "this ground
+ * has a market"; the hue is free to change again without the name turning
+ * into a lie.
+ *
+ * Display type is heavy and wide with a signal keyline, the way a game
+ * wordmark is built; data type is mono, so numbers read as a trading
+ * dashboard rather than as marketing copy. The split is deliberate: the
+ * loud voice sells the world, the quiet one reports on it.
+ */
+:root {
+  --void: #050f0b;
+  --field: #0b1a14;
+  --field-raised: #122619;
+  --field-line: #1c3729;
+
+  --chalk: #ffffff;
+  --chalk-soft: #c8d8cf;
+  --chalk-muted: #7d9488;
+
+  --signal: #2ee27b;
+  --signal-bright: #66f5a6;
+  --signal-deep: #12a054;
+
+  --rule: rgba(200, 216, 207, 0.16);
+  --rule-strong: rgba(200, 216, 207, 0.34);
+
+  --gain: #2ee27b;
+  --loss: #f2495f;
+
+  /* The hectar with the most owners. A second hue rather than a brighter
+     green, because "people are piling in" is a different fact from "this
+     trades", and two facts drawn in one colour read as one. */
+  --crowd: #5ce4ff;
+
+  /* Ownership segments. Signal is always you; the neutrals are everyone
+     else, so the bar reads at a glance as "my slice against the rest". */
+  --holder-near: #a8bfb2;
+  --holder-far: #5c6f64;
+}
+
+@theme inline {
+  --color-void: var(--void);
+  --color-field: var(--field);
+  --color-field-raised: var(--field-raised);
+  --color-field-line: var(--field-line);
+  --color-chalk: var(--chalk);
+  --color-chalk-soft: var(--chalk-soft);
+  --color-chalk-muted: var(--chalk-muted);
+  --color-signal: var(--signal);
+  --color-signal-bright: var(--signal-bright);
+  --color-signal-deep: var(--signal-deep);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-gain: var(--gain);
+  --color-loss: var(--loss);
+  --color-crowd: var(--crowd);
+  --color-holder-near: var(--holder-near);
+  --color-holder-far: var(--holder-far);
+
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-mono:
+    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans:
+    "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--void);
+}
+
+body {
+  background: var(--void);
+  color: var(--chalk);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--void);
+}
+
+/* ---- Type ------------------------------------------------------------ */
+
+/*
+ * Sized against its own column, not the viewport. The wordmark sits in a
+ * 380px rail on desktop and full width when the layout stacks, so a vw
+ * clamp gets it wrong in one of those two places every time.
+ */
+.pitch {
+  container-type: inline-size;
+}
+
+.type-hero {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(38px, 15cqw, 104px);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/*
+ * The wordmark's signal keyline, lifted from the brand banner. Painted with
+ * paint-order so the stroke sits behind the glyph and the white stays
+ * white — a plain text-stroke would eat into the letterforms.
+ */
+.wordmark-outline {
+  -webkit-text-stroke: 6px var(--signal);
+  paint-order: stroke fill;
+}
+
+@media (max-width: 640px) {
+  .wordmark-outline {
+    -webkit-text-stroke-width: 4px;
+  }
+}
+
+.type-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 3.6vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+.type-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* Numbers. Always mono, always tabular — this is a market surface. */
+.type-figure {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.type-figure-sm {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.type-label {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.type-data {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.type-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---- Surface ---------------------------------------------------------- */
+
+.sheet-grid {
+  background-image:
+    linear-gradient(to right, rgba(200, 216, 207, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(200, 216, 207, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+/* Corner dot-matrix flecks from the brand banner, used sparingly. */
+.dot-matrix {
+  background-image: radial-gradient(
+    rgba(200, 216, 207, 0.32) 1px,
+    transparent 1px
+  );
+  background-size: 9px 9px;
+}
+
+.panel {
+  background: var(--field);
+  border: 1px solid var(--rule);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+/* Genesis ticker. Duplicated content scrolls one full copy, then loops. */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker 42s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-ticker {
+    animation: none;
+  }
+}
